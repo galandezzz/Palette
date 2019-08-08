@@ -23,7 +23,7 @@ internal final class ColorCutQuantizer {
             hist.insert(color)
         }
 
-        let ignoredColors = hist.allObjects.filter { shouldIgnoreColor($0) }
+        let ignoredColors = hist.allObjects.filter { shouldIgnoreQuantizedColor($0) }
         ignoredColors.forEach { hist.removeFromSet($0) }
 
         var distinctColors = hist.allObjects
@@ -36,6 +36,10 @@ internal final class ColorCutQuantizer {
     }
 
     private let filters: [PaletteFilter]
+
+    private func shouldIgnoreQuantizedColor(_ color: Color) -> Bool {
+        return shouldIgnoreColor(color.normalized)
+    }
 
     private func shouldIgnoreColor(_ swatch: Palette.Swatch) -> Bool {
         return shouldIgnoreColor(swatch._color)
