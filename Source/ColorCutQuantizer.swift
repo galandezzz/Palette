@@ -145,7 +145,7 @@ internal final class ColorCutQuantizer {
         private var minBlue = 0, maxBlue = 0
 
         private var colorCount: Int {
-            return 1 + upperIndex - lowerIndex
+            return upperIndex - lowerIndex + 1
         }
 
         private func fitBox(colors: [Color], histogram: CountedSet<Color>) {

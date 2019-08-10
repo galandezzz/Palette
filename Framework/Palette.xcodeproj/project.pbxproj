@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F53B15A22FF643700039D92 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F53B15922FF643700039D92 /* ColorConverter.swift */; };
 		0FE76AE922FCD15F00F23EE6 /* Palette.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE76AE722FCD15F00F23EE6 /* Palette.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FE76AFB22FCD1CA00F23EE6 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF022FCD1CA00F23EE6 /* Palette.swift */; };
 		0FE76AFC22FCD1CA00F23EE6 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF222FCD1CA00F23EE6 /* PriorityQueue.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F53B15922FF643700039D92 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		0FE76AE422FCD15F00F23EE6 /* Palette.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palette.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE76AE722FCD15F00F23EE6 /* Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		0FE76AE822FCD15F00F23EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				0FE76AF622FCD1CA00F23EE6 /* Target.swift */,
 				0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */,
 				0FE76AF922FCD1CA00F23EE6 /* Color.swift */,
+				0F53B15922FF643700039D92 /* ColorConverter.swift */,
 				0FE76B0522FCD2C100F23EE6 /* UIImage+Palette.swift */,
 				0FE76AF122FCD1CA00F23EE6 /* Data Structures */,
 			);
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F53B15A22FF643700039D92 /* ColorConverter.swift in Sources */,
 				0FE76B0222FCD1CA00F23EE6 /* ColorCutQuantizer.swift in Sources */,
 				0FE76B0022FCD1CA00F23EE6 /* Target.swift in Sources */,
 				0FE76AFD22FCD1CA00F23EE6 /* Heap.swift in Sources */,

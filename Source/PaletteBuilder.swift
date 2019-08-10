@@ -10,7 +10,7 @@ import UIKit
 
 extension Palette {
 
-    public class Builder {
+    public final class Builder {
 
         // MARK: - Public
 
@@ -103,7 +103,7 @@ extension Palette {
 
         private struct Constants {
             static let defaultMaxColorsCount = 16
-            static let defaultResizeBitmapArea: CGFloat = 112 * 112
+            static let defaultResizeBitmapArea: CGFloat = 112.0 * 112.0
         }
 
         private var maxColorsCount = Constants.defaultMaxColorsCount
@@ -115,27 +115,22 @@ extension Palette {
         private var filters = [PaletteFilter]()
 
         private func scaleDownImage(_ image: UIImage, to resizeArea: CGFloat) -> UIImage {
-            var scaleRatio: CGFloat?
+            let bitmapArea = image.size.width * image.size.height
 
-            let size = image.size
-            let bitmapArea = size.width * size.height
-
-            if bitmapArea > resizeArea {
-                scaleRatio = sqrt(resizeArea / bitmapArea)
-            }
-
-            guard let ratio = scaleRatio else {
+            guard bitmapArea > resizeArea else {
                 return image
             }
 
-            let width = ceil(ratio * size.width)
-            let height = ceil(ratio * size.height)
-            let rect = CGRect(origin: .zero, size: CGSize(width: width, height: height))
+            let ratio = sqrt(resizeArea / bitmapArea)
+            let width = ceil(ratio * image.size.width)
+            let height = ceil(ratio * image.size.height)
+            let size = CGSize(width: width, height: height)
 
-            UIGraphicsBeginImageContext(rect.size)
-            image.draw(in: rect)
+            UIGraphicsBeginImageContext(size)
 
+            image.draw(in: CGRect(origin: .zero, size: size))
             let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+            
             UIGraphicsEndImageContext()
 
             return resultImage ?? image

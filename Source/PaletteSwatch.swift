@@ -13,7 +13,7 @@ public typealias HSL = (h: CGFloat, s: CGFloat, l: CGFloat)
 
 extension Palette {
 
-    public class Swatch: CustomDebugStringConvertible {
+    public final class Swatch: CustomDebugStringConvertible {
 
         public private(set) lazy var color = UIColor(_color)
 

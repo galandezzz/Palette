@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class Palette {
+public final class Palette {
 
     // MARK: - Public
 
@@ -92,7 +92,7 @@ public class Palette {
     internal func generate() {
         targets.forEach {
             $0.normalizeWeights()
-            selectedSwatches[$0] = generateScoredTarget($0)
+            selectedSwatches[$0] = swatch(for: $0)
         }
 
         usedColors.removeAll()
@@ -105,8 +105,8 @@ public class Palette {
     private var selectedSwatches = [Target: Swatch]()
     private var usedColors = Set<Color>()
 
-    private func generateScoredTarget(_ target: Target) -> Swatch? {
-        guard let swatch = getMaxScoredSwatch(for: target) else {
+    private func scoredSwatch(for target: Target) -> Swatch? {
+        guard let swatch = maxScoredSwatch(for: target) else {
             return nil
         }
 
@@ -117,19 +117,13 @@ public class Palette {
         return swatch
     }
 
-    private func getMaxScoredSwatch(for target: Target) -> Swatch? {
-        var maxScore: CGFloat = 0
-        var maxScoredSwatch: Swatch?
-        for swatch in swatches where shouldBeScored(swatch, for: target) {
-            let score = generateScore(swatch: swatch, target: target)
+    private func maxScoredSwatch(for target: Target) -> Swatch? {
+        let result = swatches
+            .filter { shouldBeScored($0, for: target) }
+            .map { (swatch: $0, score: score($0, target: target)) }
+            .max { $0.score < $1.score }
 
-            if score > maxScore {
-                maxScore = score
-                maxScoredSwatch = swatch
-            }
-        }
-
-        return maxScoredSwatch
+        return result?.swatch
     }
 
     private func shouldBeScored(_ swatch: Swatch, for target: Target) -> Bool {
@@ -140,26 +134,13 @@ public class Palette {
             && !usedColors.contains(swatch._color)
     }
 
-    private func generateScore(swatch: Swatch, target: Target) -> CGFloat {
+    private func score(_ swatch: Swatch, target: Target) -> CGFloat {
         let hsl = swatch.hsl
-
-        var saturationScore: CGFloat = 0
-        var lightnessScore: CGFloat = 0
-        var populationScore: CGFloat = 0
-
         let maxPopulation = CGFloat(dominantSwatch?.population ?? 1)
 
-        if target.saturationWeight > 0 {
-            saturationScore = target.saturationWeight * (1 - abs(hsl.s - target.targetSaturation))
-        }
-
-        if target.lightnessWeight > 0 {
-            lightnessScore = target.lightnessWeight * (1 - abs(hsl.l - target.targetLightness))
-        }
-
-        if target.populationWeight > 0 {
-            populationScore = target.populationWeight * (CGFloat(swatch.population) / maxPopulation)
-        }
+        let saturationScore = target.saturationWeight * (1 - abs(hsl.s - target.targetSaturation))
+        let lightnessScore = target.lightnessWeight * (1 - abs(hsl.l - target.targetLightness))
+        let populationScore = target.populationWeight * CGFloat(swatch.population) / maxPopulation
 
         return saturationScore + lightnessScore + populationScore
     }
