@@ -92,7 +92,7 @@ public final class Palette {
     internal func generate() {
         targets.forEach {
             $0.normalizeWeights()
-            selectedSwatches[$0] = swatch(for: $0)
+            selectedSwatches[$0] = scoredSwatch(for: $0)
         }
 
         usedColors.removeAll()
