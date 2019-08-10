@@ -8,105 +8,6 @@
 
 import UIKit
 
-public class Target: Hashable {
-
-    // MARK: - Public
-
-    public var saturationWeight: CGFloat {
-        return weights.saturation
-    }
-
-    public var lightnessWeight: CGFloat {
-        return weights.lightness
-    }
-
-    public var populationWeight: CGFloat {
-        return weights.population
-    }
-
-    public var minimumSaturation: CGFloat {
-        return saturation.min
-    }
-
-    public var targetSaturation: CGFloat {
-        return saturation.target
-    }
-
-    public var maximumSaturation: CGFloat {
-        return saturation.max
-    }
-
-    public var minimumLightness: CGFloat {
-        return lightness.min
-    }
-
-    public var targetLightness: CGFloat {
-        return lightness.target
-    }
-
-    public var maximumLightness: CGFloat {
-        return lightness.max
-    }
-
-    public internal(set) var isExclusive: Bool = true
-
-    // MARK: - Hashable
-
-    public static func == (lhs: Target, rhs: Target) -> Bool {
-        return lhs.saturation == rhs.saturation && lhs.lightness == rhs.lightness
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(saturation)
-        hasher.combine(lightness)
-    }
-
-    // MARK: - Internal
-
-    internal func normalizeWeights() {
-        let sum: CGFloat = weights.values.reduce(0.0, +)
-
-        guard sum != 0 else {
-            return
-        }
-
-        weights.values = weights.values.map { $0 / sum }
-    }
-
-    // MARK: - Private
-
-    private struct Value: Hashable {
-        var min: CGFloat = 0.0
-        var target: CGFloat = 0.5
-        var max: CGFloat = 1.0
-    }
-
-    private struct Weights: Hashable {
-        var saturation: CGFloat = 0.24
-        var lightness: CGFloat = 0.52
-        var population: CGFloat = 0.24
-
-        var values: [CGFloat] {
-            get {
-                return [saturation, lightness, population]
-            }
-            set {
-                guard newValue.count == 3 else {
-                    fatalError("Expected three components")
-                }
-
-                saturation = newValue[0]
-                lightness = newValue[1]
-                population = newValue[2]
-            }
-        }
-    }
-
-    private var saturation = Value()
-    private var lightness = Value()
-    private var weights = Weights()
-}
-
 extension Target {
 
     public static let lightVibrant: Target = {
@@ -156,8 +57,147 @@ extension Target {
 
         return result
     }()
+}
+
+public final class Target: Hashable {
+
+    // MARK: - Public
+
+    public internal(set) var minimumSaturation: CGFloat {
+        get {
+            return saturation.min
+        }
+        set {
+            saturation.min = newValue
+        }
+    }
+
+    public internal(set) var targetSaturation: CGFloat {
+        get {
+            return saturation.target
+        }
+        set {
+            saturation.target = newValue
+        }
+    }
+
+    public internal(set) var maximumSaturation: CGFloat {
+        get {
+            return saturation.max
+        }
+        set {
+            saturation.max = newValue
+        }
+    }
+
+    public internal(set) var minimumLightness: CGFloat {
+        get {
+            return lightness.min
+        }
+        set {
+            lightness.min = newValue
+        }
+    }
+
+    public internal(set) var targetLightness: CGFloat {
+        get {
+            return lightness.target
+        }
+        set {
+            lightness.target = newValue
+        }
+    }
+
+    public internal(set) var maximumLightness: CGFloat {
+        get {
+            return lightness.max
+        }
+        set {
+            lightness.max = newValue
+        }
+    }
+
+    public internal(set) var saturationWeight: CGFloat {
+        get {
+            return weights.saturation
+        }
+        set {
+            weights.saturation = newValue
+        }
+    }
+
+    public internal(set) var lightnessWeight: CGFloat {
+        get {
+            return weights.lightness
+        }
+        set {
+            weights.lightness = newValue
+        }
+    }
+
+    public internal(set) var populationWeight: CGFloat {
+        get {
+            return weights.population
+        }
+        set {
+            weights.population = newValue
+        }
+    }
+
+    public internal(set) var isExclusive: Bool = true
+
+    // MARK: - Internal
+
+    internal init() {}
+
+    internal init(_ other: Target) {
+        self.saturation = other.saturation
+        self.lightness = other.lightness
+        self.weights = other.weights
+    }
+
+    // MARK: - Hashable
+
+    public static func == (lhs: Target, rhs: Target) -> Bool {
+        return lhs.saturation == rhs.saturation && lhs.lightness == rhs.lightness
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(saturation)
+        hasher.combine(lightness)
+    }
+
+    // MARK: - Internal
+
+    internal func normalizeWeights() {
+        let sum = weights.saturation + weights.lightness + weights.population
+
+        guard sum > 0 else {
+            return
+        }
+
+        weights.saturation /= sum
+        weights.lightness /= sum
+        weights.population /= sum
+    }
 
     // MARK: - Private
+
+    private struct Value: Hashable {
+        var min: CGFloat = 0.0
+        var target: CGFloat = 0.5
+        var max: CGFloat = 1.0
+    }
+
+    private struct Weights: Hashable {
+        var saturation: CGFloat = 0.24
+        var lightness: CGFloat = 0.52
+        var population: CGFloat = 0.24
+    }
+
+    private var saturation = Value()
+    private var lightness = Value()
+    private var weights = Weights()
 
     private func setDefaultLightLightnessValues() {
         lightness.min = 0.55
