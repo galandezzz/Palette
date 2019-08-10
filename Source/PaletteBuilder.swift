@@ -152,7 +152,7 @@ extension Palette {
             let bytesPerRow = width * 4
             let bytesCount = bytesPerRow * height
 
-            let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
 
             var data = Array(repeating: UInt8(0), count: bytesCount)
 
