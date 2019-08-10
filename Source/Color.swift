@@ -18,15 +18,11 @@ internal extension UIColor {
     }
 }
 
-internal struct Color: Hashable, Comparable {
+internal struct Color: Hashable, Comparable, CustomDebugStringConvertible {
 
     internal enum Width: Int {
         case normal = 8
         case quantized = 5
-    }
-
-    var value: Int {
-        return Int(storage)
     }
 
     internal init(_ storage: Int, width: Width = .normal) {
@@ -83,9 +79,23 @@ internal struct Color: Hashable, Comparable {
 
     internal let width: Width
 
-    static func < (lhs: Color, rhs: Color) -> Bool {
+    // MARK: - CustomDebugStringConvertible
+
+    var debugDescription: String {
+        return """
+
+        Red: \(red), Green: \(green), Blue: \(blue)
+        Hue: \(hsl.h), Saturation: \(hsl.s), Brightness: \(hsl.l)
+        """
+    }
+
+    // MARK: - Comparable
+
+    internal static func < (lhs: Color, rhs: Color) -> Bool {
         return lhs.storage < rhs.storage
     }
+
+    // MARK: - Private
 
     private let storage: Int
 
@@ -113,7 +123,8 @@ private struct ColorUtils {
         let cmax = max(r, g, b)
         let delta = cmax - cmin
 
-        var h, s: CGFloat
+        var h: CGFloat = 0.0
+        var s: CGFloat = 0.0
         let l = (cmax + cmin) / 2
 
         if cmax == cmin {
@@ -132,7 +143,7 @@ private struct ColorUtils {
         }
 
         h = (h * 60).truncatingRemainder(dividingBy: 360)
-        if h < 360 {
+        if h < 0 {
             h += 360
         }
 

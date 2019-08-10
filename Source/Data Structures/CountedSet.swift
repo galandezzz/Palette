@@ -36,12 +36,6 @@ internal struct CountedSet<T: Hashable> {
         storage.remove(object)
     }
 
-    internal func removeFromSet(_ object: T) {
-        for _ in 0..<count(for: object) {
-            remove(object)
-        }
-    }
-
     internal func count(for object: T) -> Int {
         return storage.count(for: object)
     }

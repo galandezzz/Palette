@@ -12,19 +12,14 @@ internal final class ColorCutQuantizer {
 
     internal var quantizedColors = [Palette.Swatch]()
 
-    internal init(colors: inout [Color], maxColorsCount: Int, filters: [PaletteFilter]) {
+    internal init(colors: [Color], maxColorsCount: Int, filters: [PaletteFilter]) {
         self.filters = filters
 
-        let hist = CountedSet<Color>()
-
-        colors.enumerated().forEach {
-            let color = $0.element.quantized
-            colors[$0.offset] = color
-            hist.insert(color)
-        }
-
-        let ignoredColors = hist.allObjects.filter { shouldIgnoreQuantizedColor($0) }
-        ignoredColors.forEach { hist.removeFromSet($0) }
+        let hist = CountedSet(
+            colors
+                .map { $0.quantized }
+                .filter { !shouldIgnoreColor($0.normalized) }
+        )
 
         var distinctColors = hist.allObjects
 
@@ -36,10 +31,6 @@ internal final class ColorCutQuantizer {
     }
 
     private let filters: [PaletteFilter]
-
-    private func shouldIgnoreQuantizedColor(_ color: Color) -> Bool {
-        return shouldIgnoreColor(color.normalized)
-    }
 
     private func shouldIgnoreColor(_ swatch: Palette.Swatch) -> Bool {
         return shouldIgnoreColor(swatch._color)

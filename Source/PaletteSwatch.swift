@@ -13,7 +13,7 @@ public typealias HSL = (h: CGFloat, s: CGFloat, l: CGFloat)
 
 extension Palette {
 
-    public class Swatch {
+    public class Swatch: CustomDebugStringConvertible {
 
         public private(set) lazy var color = UIColor(_color)
 
@@ -21,6 +21,14 @@ extension Palette {
         public private(set) lazy var rgb: RGB = _color.rgb
 
         public let population: Int
+
+        public var debugDescription: String {
+            return """
+
+            Color: \(String(describing: _color))
+            Population: \(population)
+            """
+        }
 
         internal init(color: Color, population: Int) {
             self._color = color

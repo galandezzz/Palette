@@ -84,7 +84,7 @@ public class Palette {
 
     // MARK: - Internal
 
-    internal init(swatches: [Swatch], targets: Set<Target>) {
+    internal init(swatches: [Swatch], targets: [Target]) {
         self.swatches = swatches
         self.targets = targets
     }
@@ -100,10 +100,10 @@ public class Palette {
 
     // MARK: - Private
 
-    private let targets: Set<Target>
+    private let targets: [Target]
 
     private var selectedSwatches = [Target: Swatch]()
-    private var usedColors = [Color]()
+    private var usedColors = Set<Color>()
 
     private func generateScoredTarget(_ target: Target) -> Swatch? {
         guard let swatch = getMaxScoredSwatch(for: target) else {
@@ -111,7 +111,7 @@ public class Palette {
         }
 
         if target.isExclusive {
-            usedColors.append(swatch._color)
+            usedColors.insert(swatch._color)
         }
 
         return swatch

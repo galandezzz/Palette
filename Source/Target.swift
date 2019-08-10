@@ -53,15 +53,12 @@ public class Target: Hashable {
     // MARK: - Hashable
 
     public static func == (lhs: Target, rhs: Target) -> Bool {
-        return lhs.saturation == rhs.saturation
-            && lhs.lightness == rhs.lightness
-            && lhs.weights == rhs.weights
+        return lhs.saturation == rhs.saturation && lhs.lightness == rhs.lightness
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(saturation)
         hasher.combine(lightness)
-        hasher.combine(weights)
     }
 
     // MARK: - Internal

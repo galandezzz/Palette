@@ -45,7 +45,7 @@ extension Palette {
         }
 
         public func byAddingTarget(_ target: Target) -> Builder {
-            self.targets.insert(target)
+            self.targets.append(target)
 
             return self
         }
@@ -55,8 +55,8 @@ extension Palette {
 
             if let image = image {
                 let scaledImage = scaleDownImage(image, to: resizeArea)
-                var colors = calculateColors(from: scaledImage)
-                let quantizer = ColorCutQuantizer(colors: &colors, maxColorsCount: maxColorsCount, filters: filters)
+                let colors = calculateColors(from: scaledImage)
+                let quantizer = ColorCutQuantizer(colors: colors, maxColorsCount: maxColorsCount, filters: filters)
                 swatches = quantizer.quantizedColors
             } else {
                 swatches = self.swatches
@@ -85,12 +85,12 @@ extension Palette {
 
             self.filters.append(DefaultFilter())
 
-            self.targets.insert(.lightVibrant)
-            self.targets.insert(.vibrant)
-            self.targets.insert(.darkVibrant)
-            self.targets.insert(.lightMuted)
-            self.targets.insert(.muted)
-            self.targets.insert(.darkMuted)
+            self.targets.append(.lightVibrant)
+            self.targets.append(.vibrant)
+            self.targets.append(.darkVibrant)
+            self.targets.append(.lightMuted)
+            self.targets.append(.muted)
+            self.targets.append(.darkMuted)
         }
 
         internal init(swatches: [Swatch]) {
@@ -111,7 +111,7 @@ extension Palette {
 
         private let image: UIImage?
         private var swatches = [Swatch]()
-        private var targets = Set<Target>()
+        private var targets = [Target]()
         private var filters = [PaletteFilter]()
 
         private func scaleDownImage(_ image: UIImage, to resizeArea: CGFloat) -> UIImage {
