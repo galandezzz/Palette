@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name           = 'Palette'
-  spec.version        = '1.0.4'
+  spec.version        = '1.0.5'
   spec.summary        = 'Color palette generation from image written in Swift'
   spec.homepage       = 'https://github.com/galandezzz/ios-Palette'
   spec.license        = 'MIT'
