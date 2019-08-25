@@ -1,6 +1,6 @@
 # Palette
 
-Color palette generation from image written in Swfit.
+Color palette generation from image written in Swift.
 
 ## Installation
 
