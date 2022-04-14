@@ -11,8 +11,10 @@ import UIKit
 public typealias RGB = (r: Int, g: Int, b: Int)
 public typealias HSL = (h: CGFloat, s: CGFloat, l: CGFloat)
 
-extension Palette {
+private let MinContrastTitleText: CGFloat = 3.0
+private let MinContrastBodyText: CGFloat = 4.5
 
+extension Palette {
     public final class Swatch: CustomDebugStringConvertible {
 
         public private(set) lazy var color = UIColor(_color)
@@ -36,5 +38,16 @@ extension Palette {
         }
 
         internal let _color: Color
+        
+        public lazy var titleTextColor: UIColor = {
+            var c = ColorUtils.getTextColorForBackground(backgroundColor: color.cgColor, minContrastRatio: MinContrastTitleText)
+            return UIColor(cgColor: c)
+        }()
+        
+        public lazy var bodyTextColor: UIColor = {
+            var c = ColorUtils.getTextColorForBackground(backgroundColor: color.cgColor, minContrastRatio: MinContrastBodyText)
+            return UIColor(cgColor: c)
+        }()
+        
     }
 }
