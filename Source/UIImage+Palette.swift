@@ -6,7 +6,7 @@
 //  Copyright © 2019 Egor Snitsar. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIImage {
 
@@ -16,5 +16,9 @@ extension UIImage {
 
     public func createPalette(_ completion: @escaping (Palette) -> Void) {
         return Palette.from(image: self).generate(completion)
+    }
+    
+    public func createPalette() async -> Palette {
+        return await Palette.from(image: self).generate()
     }
 }

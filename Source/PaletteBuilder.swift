@@ -77,6 +77,13 @@ extension Palette {
                 }
             }
         }
+        public func generate() async -> Palette {
+            await withCheckedContinuation { continuation in
+                generate { palette in
+                    continuation.resume(returning: palette)
+                }
+            }
+        }
 
         // MARK: - Internal
 
