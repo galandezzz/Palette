@@ -6,7 +6,11 @@
 //  Copyright © 2019 Egor Snitsar. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 public final class Palette {
 
@@ -14,73 +18,129 @@ public final class Palette {
 
     public let swatches: [Swatch]
 
-    public class func from(image: UIImage) -> Builder {
-        return Builder(image: image)
+    #if os(iOS)
+    public class func from(image: UIImage) -> Builder? {
+        guard let cgImage = image.cgImage else { return nil }
+        return Builder(image: cgImage)
     }
+    #else
+    public class func from(image: NSImage) -> Builder? {
+        guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return nil }
+        return Builder(image: cgImage)
+    }
+    #endif
 
     public var lightVibrantSwatch: Swatch? {
         return swatch(for: .lightVibrant)
     }
 
+    #if os(iOS)
     public var lightVibrantColor: UIColor? {
         return lightVibrantSwatch?.color
     }
+    #else
+    public var lightVibrantColor: NSColor? {
+        return lightVibrantSwatch?.color
+    }
+    #endif
 
     public var vibrantSwatch: Swatch? {
         return swatch(for: .vibrant)
     }
 
+    #if os(iOS)
     public var vibrantColor: UIColor? {
         return vibrantSwatch?.color
     }
+    #else
+    public var vibrantColor: NSColor? {
+        return vibrantSwatch?.color
+    }
+    #endif
 
     public var darkVibrantSwatch: Swatch? {
         return swatch(for: .darkVibrant)
     }
 
+    #if os(iOS)
     public var darkVibrantColor: UIColor? {
         return darkVibrantSwatch?.color
     }
+    #else
+    public var darkVibrantColor: NSColor? {
+        return darkVibrantSwatch?.color
+    }
+    #endif
 
     public var lightMutedSwatch: Swatch? {
         return swatch(for: .lightMuted)
     }
 
+    #if os(iOS)
     public var lightMutedColor: UIColor? {
         return lightMutedSwatch?.color
     }
+    #else
+    public var lightMutedColor: NSColor? {
+        return lightMutedSwatch?.color
+    }
+    #endif
 
     public var mutedSwatch: Swatch? {
         return swatch(for: .muted)
     }
 
+    #if os(iOS)
     public var mutedColor: UIColor? {
         return mutedSwatch?.color
     }
+    #else
+    public var mutedColor: NSColor? {
+        return mutedSwatch?.color
+    }
+    #endif
 
     public var darkMutedSwatch: Swatch? {
         return swatch(for: .darkMuted)
     }
 
-    public var darkMutedColor:UIColor? {
+    #if os(iOS)
+    public var darkMutedColor: UIColor? {
         return darkMutedSwatch?.color
     }
+    #else
+    public var darkMutedColor: NSColor? {
+        return darkMutedSwatch?.color
+    }
+    #endif
 
     public private(set) lazy var dominantSwatch: Swatch? = {
         return swatches.max { $0.population < $1.population }
     }()
 
+    #if os(iOS)
     public var dominantColor: UIColor? {
         return dominantSwatch?.color
     }
+    #else
+    public var dominantColor: NSColor? {
+        return dominantSwatch?.color
+    }
+    #endif
 
     public func swatch(for target: Target) -> Swatch? {
         return selectedSwatches[target]
     }
 
+    #if os(iOS)
     public func color(for target: Target) -> UIColor? {
         return swatch(for: target)?.color
     }
+    #else
+    public func color(for target: Target) -> NSColor? {
+        return swatch(for: target)?.color
+    }
+    #endif
 
     // MARK: - Internal
 

@@ -20,7 +20,7 @@
 		0FE76B0222FCD1CA00F23EE6 /* ColorCutQuantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */; };
 		0FE76B0322FCD1CA00F23EE6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF922FCD1CA00F23EE6 /* Color.swift */; };
 		0FE76B0422FCD1CA00F23EE6 /* PaletteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AFA22FCD1CA00F23EE6 /* PaletteBuilder.swift */; };
-		0FE76B0622FCD2C100F23EE6 /* UIImage+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76B0522FCD2C100F23EE6 /* UIImage+Palette.swift */; };
+		0FE76B0622FCD2C100F23EE6 /* Image+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCutQuantizer.swift; sourceTree = "<group>"; };
 		0FE76AF922FCD1CA00F23EE6 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0FE76AFA22FCD1CA00F23EE6 /* PaletteBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteBuilder.swift; sourceTree = "<group>"; };
-		0FE76B0522FCD2C100F23EE6 /* UIImage+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Palette.swift"; sourceTree = "<group>"; };
+		0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Palette.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,7 @@
 				0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */,
 				0FE76AF922FCD1CA00F23EE6 /* Color.swift */,
 				0F53B15922FF643700039D92 /* ColorConverter.swift */,
-				0FE76B0522FCD2C100F23EE6 /* UIImage+Palette.swift */,
+				0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */,
 				0FE76AF122FCD1CA00F23EE6 /* Data Structures */,
 			);
 			name = Source;
@@ -197,7 +197,7 @@
 				0FE76AFF22FCD1CA00F23EE6 /* PaletteSwatch.swift in Sources */,
 				0FE76AFC22FCD1CA00F23EE6 /* PriorityQueue.swift in Sources */,
 				0FE76B0322FCD1CA00F23EE6 /* Color.swift in Sources */,
-				0FE76B0622FCD2C100F23EE6 /* UIImage+Palette.swift in Sources */,
+				0FE76B0622FCD2C100F23EE6 /* Image+Palette.swift in Sources */,
 				0FE76B0422FCD1CA00F23EE6 /* PaletteBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,7 +350,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -379,7 +381,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

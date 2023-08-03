@@ -6,7 +6,7 @@
 //  Copyright © 2019 Egor Snitsar. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public protocol PaletteFilter {
     func isAllowed(rgb: RGB, hsl: HSL) -> Bool

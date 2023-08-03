@@ -6,6 +6,8 @@
 //  Copyright © 2019 Egor Snitsar. All rights reserved.
 //
 
+#if os(iOS)
+
 import UIKit
 
 extension UIColor {
@@ -17,6 +19,23 @@ extension UIColor {
                   alpha: 1.0)
     }
 }
+
+#else
+
+import AppKit
+
+extension NSColor {
+
+    internal convenience init(_ color: Color) {
+        self.init(red: CGFloat(color.red) / 255.0,
+                  green: CGFloat(color.green) / 255.0,
+                  blue: CGFloat(color.blue) / 255.0,
+                  alpha: 1.0)
+    }
+}
+
+
+#endif
 
 internal struct Color: Hashable, Comparable, CustomDebugStringConvertible {
 

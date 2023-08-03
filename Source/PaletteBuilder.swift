@@ -6,7 +6,8 @@
 //  Copyright © 2019 Egor Snitsar. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import CoreGraphics
 
 extension Palette {
 
@@ -80,7 +81,7 @@ extension Palette {
 
         // MARK: - Internal
 
-        internal init(image: UIImage) {
+        internal init(image: CGImage) {
             self.image = image
 
             self.filters.append(DefaultFilter())
@@ -109,38 +110,41 @@ extension Palette {
         private var maxColorsCount = Constants.defaultMaxColorsCount
         private var resizeArea = Constants.defaultResizeBitmapArea
 
-        private let image: UIImage?
+        private let image: CGImage?
         private var swatches = [Swatch]()
         private var targets = [Target]()
         private var filters = [PaletteFilter]()
 
-        private func scaleDownImage(_ image: UIImage, to resizeArea: CGFloat) -> UIImage {
-            let bitmapArea = image.size.width * image.size.height
+        private func scaleDownImage(_ image: CGImage, to resizeArea: CGFloat) -> CGImage {
+            let bitmapArea = CGFloat(image.width * image.height)
 
             guard bitmapArea > resizeArea else {
                 return image
             }
 
             let ratio = sqrt(resizeArea / bitmapArea)
-            let width = ceil(ratio * image.size.width)
-            let height = ceil(ratio * image.size.height)
+            let width = ceil(ratio * CGFloat(image.width))
+            let height = ceil(ratio * CGFloat(image.height))
             let size = CGSize(width: width, height: height)
 
-            UIGraphicsBeginImageContext(size)
-
-            image.draw(in: CGRect(origin: .zero, size: size))
-            let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+            guard let context = CGContext(
+                    data: nil,
+                    width: Int(width),
+                    height: Int(height),
+                    bitsPerComponent: image.bitsPerComponent,
+                    bytesPerRow: 0,
+                    space: image.colorSpace ?? CGColorSpaceCreateDeviceRGB(),
+                    bitmapInfo: image.bitmapInfo.rawValue
+                ) else { return image }
             
-            UIGraphicsEndImageContext()
+            // Draw the original image into the new context
+            context.draw(image, in: CGRect(origin: .zero, size: size))
 
-            return resultImage ?? image
+            // Get the resulting image from the context
+            return context.makeImage() ?? image
         }
 
-        private func calculateColors(from image: UIImage) -> [Color] {
-            guard let cgImage = image.cgImage else {
-                return []
-            }
-
+        private func calculateColors(from cgImage: CGImage) -> [Color] {
             let width = cgImage.width
             let height = cgImage.height
 
