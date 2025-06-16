@@ -1,16 +1,8 @@
-//
-//  ColorUtils.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 10.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import Foundation
 
-internal struct ColorConverter {
+struct ColorConverter {
 
-    internal static func colorToHSL(_ color: Color) -> HSL {
+    static func colorToHSL(_ color: Color) -> HSL {
         let r = CGFloat(color.red) / 255.0
         let g = CGFloat(color.green) / 255.0
         let b = CGFloat(color.blue) / 255.0
@@ -48,15 +40,12 @@ internal struct ColorConverter {
         )
     }
 
-    internal static func reduceAlpha(for value: Int, alpha: Int) -> Int {
-        guard alpha > .zero else {
-            return value
-        }
-
+    static func reduceAlpha(for value: Int, alpha: Int) -> Int {
+        guard alpha > .zero else { return value }
         return Int(CGFloat(value) / CGFloat(alpha) * 255.0)
     }
 
-    internal static func packColor(components: [Int], width: Int) -> Int {
+    static func packColor(components: [Int], width: Int) -> Int {
         let mask: Int = (1 << width) - 1
 
         let r = components[0]
@@ -66,14 +55,12 @@ internal struct ColorConverter {
         return ((r & mask) << (width * 2)) | ((g & mask) << width) | (b & mask)
     }
 
-    internal static func packColor(components: [UInt8], width: Int) -> Int {
-        return packColor(components: components.map { Int($0) }, width: width)
+    static func packColor(components: [UInt8], width: Int) -> Int {
+        packColor(components: components.map { Int($0) }, width: width)
     }
 
-    internal static func modifyWordWidth(_ value: Int, currentWidth: Int, targetWidth: Int) -> Int {
-        guard currentWidth != targetWidth else {
-            return value
-        }
+    static func modifyWordWidth(_ value: Int, currentWidth: Int, targetWidth: Int) -> Int {
+        guard currentWidth != targetWidth else { return value }
 
         let newValue: Int
         if targetWidth > currentWidth {
@@ -83,12 +70,5 @@ internal struct ColorConverter {
         }
 
         return newValue & ((1 << targetWidth) - 1)
-    }
-}
-
-private extension Comparable {
-
-    func limited(_ lowerBound: Self, _ upperBound: Self) -> Self {
-        return min(max(lowerBound, self), upperBound)
     }
 }

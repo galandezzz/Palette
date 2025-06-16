@@ -1,112 +1,133 @@
-//
-//  ColorCutQuantizer.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 06.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import UIKit
 
-internal final class ColorCutQuantizer {
+final class ColorCutQuantizer {
 
-    internal var quantizedColors = [Palette.Swatch]()
+    private let filters: [PaletteFilter]
 
-    internal init(colors: [Color], maxColorsCount: Int, filters: [PaletteFilter]) {
+    private(set) var quantizedColors = [Palette.Swatch]()
+
+    init(colors: [Color], maxColorsCount: Int, filters: [PaletteFilter]) {
         self.filters = filters
 
         let hist = CountedSet(
             colors
-                .map { $0.quantized }
+                .map(\.quantized)
                 .filter { !shouldIgnoreColor($0.normalized) }
         )
 
-        var distinctColors = hist.allObjects
+        var distinctColors = hist.elements
 
         if distinctColors.count <= maxColorsCount {
-            quantizedColors = distinctColors.map { Palette.Swatch(color: $0.normalized, population: hist.count(for: $0)) }
+            quantizedColors = distinctColors.map {
+                Palette.Swatch(
+                    color: $0.normalized,
+                    population: hist.count(for: $0)
+                )
+            }
         } else {
-            quantizedColors = quantizePixels(maxColorsCount: maxColorsCount, colors: &distinctColors, histogram: hist)
+            quantizedColors = quantizePixels(
+                maxColorsCount: maxColorsCount,
+                colors: &distinctColors,
+                histogram: hist
+            )
         }
     }
 
-    private let filters: [PaletteFilter]
-
     private func shouldIgnoreColor(_ swatch: Palette.Swatch) -> Bool {
-        return shouldIgnoreColor(swatch._color)
+        shouldIgnoreColor(swatch._color)
     }
 
     private func shouldIgnoreColor(_ color: Color) -> Bool {
-        return filters.contains { !$0.isAllowed(rgb: color.rgb, hsl: color.hsl) }
+        filters.contains { !$0.isAllowed(rgb: color.rgb, hsl: color.hsl) }
     }
 
-    private func quantizePixels(maxColorsCount: Int, colors: inout [Color], histogram: CountedSet<Color>) -> [Palette.Swatch] {
+    private func quantizePixels(
+        maxColorsCount: Int,
+        colors: inout [Color],
+        histogram: CountedSet<Color>
+    ) -> [Palette.Swatch] {
         var queue = PriorityQueue<VBox>() { $0.volume > $1.volume }
-        queue.enqueue(VBox(lowerIndex: colors.startIndex, upperIndex: colors.index(before: colors.endIndex), colors: colors, histogram: histogram))
+        let vbox = VBox(
+            range: ClosedRange(colors.indices),
+            colors: colors,
+            histogram: histogram
+        )
+        queue.enqueue(vbox)
         splitBoxes(queue: &queue, maxSize: maxColorsCount, colors: &colors, histogram: histogram)
 
         return generateAverageColors(from: queue.elements, colors: colors, histogram: histogram)
     }
 
-    private func splitBoxes(queue: inout PriorityQueue<VBox>, maxSize: Int, colors: inout [Color], histogram: CountedSet<Color>) {
+    private func splitBoxes(
+        queue: inout PriorityQueue<VBox>,
+        maxSize: Int,
+        colors: inout [Color],
+        histogram: CountedSet<Color>
+    ) {
         while queue.count < maxSize {
-            if let vbox = queue.dequeue(), vbox.canSplit {
-                if let newBox = vbox.splitBox(colors: &colors, histogram: histogram)  {
-                    queue.enqueue(newBox)
-                }
-                queue.enqueue(vbox)
-            } else {
+            guard let vbox = queue.dequeue(), vbox.canSplit else {
                 return
             }
-        }
-    }
-
-    private func generateAverageColors(from boxes: [VBox], colors: [Color], histogram: CountedSet<Color>) -> [Palette.Swatch] {
-        return boxes.compactMap {
-            let swatch = $0.averageColor(colors: colors, histogram: histogram)
-
-            guard !shouldIgnoreColor(swatch) else {
-                return nil
+            if let newBox = vbox.splitBox(colors: &colors, histogram: histogram)  {
+                queue.enqueue(newBox)
             }
-
-            return swatch
+            queue.enqueue(vbox)
         }
     }
 
-    private class VBox {
+    private func generateAverageColors(
+        from boxes: [VBox],
+        colors: [Color],
+        histogram: CountedSet<Color>
+    ) -> [Palette.Swatch] {
+        boxes.compactMap {
+            let swatch = $0.averageColor(colors: colors, histogram: histogram)
+            return shouldIgnoreColor(swatch) ? nil : swatch
+        }
+    }
 
-        internal init(lowerIndex: Int, upperIndex: Int, colors: [Color], histogram: CountedSet<Color>) {
-            self.lowerIndex = lowerIndex
-            self.upperIndex = upperIndex
+    private final class VBox {
+
+        init(
+            range: ClosedRange<Int>,
+            colors: [Color],
+            histogram: CountedSet<Color>
+        ) {
+            self.range = range
             fitBox(colors: colors, histogram: histogram)
         }
 
-        internal var volume: Int {
-            return (maxRed - minRed + 1) * (maxGreen - minGreen + 1) * (maxBlue - minBlue + 1)
+        var volume: Int {
+            (maxRed - minRed + 1) * (maxGreen - minGreen + 1) * (maxBlue - minBlue + 1)
         }
 
-        internal var canSplit: Bool {
-            return colorCount > 1
+        var canSplit: Bool {
+            colorCount > 1
         }
 
-        internal func splitBox(colors: inout [Color], histogram: CountedSet<Color>) -> VBox? {
-            guard canSplit else {
-                return nil
-            }
+        func splitBox(
+            colors: inout [Color],
+            histogram: CountedSet<Color>
+        ) -> VBox? {
+            guard canSplit else { return nil }
 
             let splitPoint = findSplitPoint(colors: &colors, histogram: histogram)
-            let newBox = VBox(lowerIndex: splitPoint + 1, upperIndex: upperIndex, colors: colors, histogram: histogram)
+            let range = splitPoint + 1...range.upperBound
+            let newBox = VBox(range: range, colors: colors, histogram: histogram)
 
-            upperIndex = splitPoint
+            self.range = self.range.lowerBound...splitPoint
             fitBox(colors: colors, histogram: histogram)
 
             return newBox
         }
 
-        internal func averageColor(colors: [Color], histogram: CountedSet<Color>) -> Palette.Swatch {
+        func averageColor(
+            colors: [Color],
+            histogram: CountedSet<Color>
+        ) -> Palette.Swatch {
             var redSum = 0, greenSum = 0, blueSum = 0, totalCount = 0
 
-            colors[lowerIndex...upperIndex].forEach {
+            colors[range].forEach {
                 let (r, g, b) = $0.rgb
                 let count = histogram.count(for: $0)
 
@@ -135,8 +156,7 @@ internal final class ColorCutQuantizer {
             case blue
         }
 
-        private let lowerIndex: Int
-        private var upperIndex: Int
+        private var range: ClosedRange<Int>
 
         private var population = 0
 
@@ -145,18 +165,22 @@ internal final class ColorCutQuantizer {
         private var minBlue = 0, maxBlue = 0
 
         private var colorCount: Int {
-            return upperIndex - lowerIndex + 1
+            range.count
         }
 
-        private func fitBox(colors: [Color], histogram: CountedSet<Color>) {
+        private func fitBox(
+            colors: [Color],
+            histogram: CountedSet<Color>
+        ) {
             minRed = Int.max
             minGreen = Int.max
             minBlue = Int.max
+
             maxRed = Int.min
             maxGreen = Int.min
             maxBlue = Int.min
 
-            for i in (lowerIndex...upperIndex) {
+            for i in range {
                 let color = colors[i]
                 population += histogram.count(for: color)
 
@@ -164,14 +188,14 @@ internal final class ColorCutQuantizer {
                 let g = Int(color.green)
                 let b = Int(color.blue)
 
-                if r > maxRed { maxRed = r }
-                if r < minRed { minRed = r }
+                maxRed = max(maxRed, r)
+                minRed = min(minRed, r)
 
-                if g > maxGreen { maxGreen = g }
-                if g < minGreen { minGreen = g }
+                maxGreen = max(maxGreen, g)
+                minGreen = min(minGreen, g)
 
-                if b > maxBlue { maxBlue = b }
-                if b < minBlue { minBlue = b }
+                maxBlue = max(maxBlue, b)
+                minBlue = min(minBlue, b)
             }
         }
 
@@ -180,51 +204,56 @@ internal final class ColorCutQuantizer {
             let greenLength = maxGreen - minGreen
             let blueLength = maxBlue - minBlue
 
-            if redLength >= greenLength && redLength >= blueLength {
+            if redLength >= greenLength, redLength >= blueLength {
                 return .red
-            } else if greenLength >= redLength && greenLength >= blueLength {
+            } else if greenLength >= redLength, greenLength >= blueLength {
                 return .green
             } else {
                 return .blue
             }
         }
 
-        private func findSplitPoint(colors: inout [Color], histogram: CountedSet<Color>) -> Int {
+        private func findSplitPoint(
+            colors: inout [Color],
+            histogram: CountedSet<Color>
+        ) -> Int {
             let longestComponent = findLongestComponent()
 
-            modifySignificantOctet(for: &colors, component: longestComponent, lower: lowerIndex, upper: upperIndex)
-
-            colors[lowerIndex...upperIndex].sort()
-
-            modifySignificantOctet(for: &colors, component: longestComponent, lower: lowerIndex, upper: upperIndex)
+            modifySignificantOctet(for: &colors, component: longestComponent, range: range)
+            colors[range].sort()
+            modifySignificantOctet(for: &colors, component: longestComponent, range: range)
 
             let midPoint = population / 2
             var count = 0
 
-            for i in (lowerIndex...upperIndex) {
+            for i in range {
                 count += histogram.count(for: colors[i])
 
                 if count >= midPoint {
-                    return min(upperIndex - 1, i)
+                    return min(range.upperBound - 1, i)
                 }
             }
 
-            return lowerIndex
+            return range.lowerBound
         }
 
-        private func modifySignificantOctet(for colors: inout [Color], component: Component, lower: Int, upper: Int) {
+        private func modifySignificantOctet(
+            for colors: inout [Color],
+            component: Component,
+            range: ClosedRange<Int>
+        ) {
             switch component {
             case .red:
                 break
 
             case .green:
-                for i in (lower...upper) {
+                for i in range {
                     let (r, g, b) = colors[i].rgb
                     colors[i] = Color([g, r, b], width: colors[i].width)
                 }
 
             case .blue:
-                for i in (lower...upper) {
+                for i in range {
                     let (r, g, b) = colors[i].rgb
                     colors[i] = Color([b, g, r], width: colors[i].width)
                 }

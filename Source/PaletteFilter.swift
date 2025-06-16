@@ -1,18 +1,10 @@
-//
-//  PaletteFilter.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 06.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import UIKit
 
 public protocol PaletteFilter {
     func isAllowed(rgb: RGB, hsl: HSL) -> Bool
 }
 
-internal struct DefaultFilter: PaletteFilter {
+struct DefaultFilter: PaletteFilter {
 
     private struct Constants {
         static let blackMaxLightness: CGFloat = 0.05
@@ -22,18 +14,19 @@ internal struct DefaultFilter: PaletteFilter {
     }
 
     func isAllowed(rgb: RGB, hsl: HSL) -> Bool {
-        return !isWhite(hsl) && !isBlack(hsl) && !isNearRedILine(hsl)
+        !isWhite(hsl) && !isBlack(hsl) && !isNearRedILine(hsl)
     }
 
     private func isBlack(_ hsl: HSL) -> Bool {
-        return hsl.l <= Constants.blackMaxLightness
+        hsl.l <= Constants.blackMaxLightness
     }
 
     private func isWhite(_ hsl: HSL) -> Bool {
-        return hsl.l >= Constants.whiteMinLightness
+        hsl.l >= Constants.whiteMinLightness
     }
 
     private func isNearRedILine(_ hsl: HSL) -> Bool {
-        return Constants.iLineHueRange.contains(hsl.h) && Constants.iLineSaturationRange.contains(hsl.s)
+        Constants.iLineHueRange.contains(hsl.h) &&
+        Constants.iLineSaturationRange.contains(hsl.s)
     }
 }

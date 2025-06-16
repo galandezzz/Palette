@@ -1,11 +1,3 @@
-//
-//  Target.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 05.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import UIKit
 
 extension Target {
@@ -64,93 +56,57 @@ public final class Target: Hashable {
     // MARK: - Public
 
     public internal(set) var minimumSaturation: CGFloat {
-        get {
-            return saturation.min
-        }
-        set {
-            saturation.min = newValue
-        }
+        get { saturation.min }
+        set { saturation.min = newValue }
     }
 
     public internal(set) var targetSaturation: CGFloat {
-        get {
-            return saturation.target
-        }
-        set {
-            saturation.target = newValue
-        }
+        get { saturation.target }
+        set { saturation.target = newValue }
     }
 
     public internal(set) var maximumSaturation: CGFloat {
-        get {
-            return saturation.max
-        }
-        set {
-            saturation.max = newValue
-        }
+        get { saturation.max }
+        set { saturation.max = newValue }
     }
 
     public internal(set) var minimumLightness: CGFloat {
-        get {
-            return lightness.min
-        }
-        set {
-            lightness.min = newValue
-        }
+        get { lightness.min }
+        set { lightness.min = newValue }
     }
 
     public internal(set) var targetLightness: CGFloat {
-        get {
-            return lightness.target
-        }
-        set {
-            lightness.target = newValue
-        }
+        get { lightness.target }
+        set { lightness.target = newValue }
     }
 
     public internal(set) var maximumLightness: CGFloat {
-        get {
-            return lightness.max
-        }
-        set {
-            lightness.max = newValue
-        }
+        get { lightness.max }
+        set { lightness.max = newValue }
     }
 
     public internal(set) var saturationWeight: CGFloat {
-        get {
-            return weights.saturation
-        }
-        set {
-            weights.saturation = newValue
-        }
+        get { weights.saturation }
+        set { weights.saturation = newValue }
     }
 
     public internal(set) var lightnessWeight: CGFloat {
-        get {
-            return weights.lightness
-        }
-        set {
-            weights.lightness = newValue
-        }
+        get { weights.lightness }
+        set { weights.lightness = newValue }
     }
 
     public internal(set) var populationWeight: CGFloat {
-        get {
-            return weights.population
-        }
-        set {
-            weights.population = newValue
-        }
+        get { weights.population }
+        set { weights.population = newValue }
     }
 
     public internal(set) var isExclusive: Bool = true
 
     // MARK: - Internal
 
-    internal init() {}
+    init() {}
 
-    internal init(_ other: Target) {
+    init(_ other: Target) {
         self.saturation = other.saturation
         self.lightness = other.lightness
         self.weights = other.weights
@@ -169,12 +125,10 @@ public final class Target: Hashable {
 
     // MARK: - Internal
 
-    internal func normalizeWeights() {
+    func normalizeWeights() {
         let sum = weights.saturation + weights.lightness + weights.population
 
-        guard sum > 0 else {
-            return
-        }
+        guard sum > 0 else { return }
 
         weights.saturation /= sum
         weights.lightness /= sum

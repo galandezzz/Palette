@@ -1,11 +1,3 @@
-//
-//  Palette.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 05.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import UIKit
 
 public final class Palette {
@@ -14,82 +6,82 @@ public final class Palette {
 
     public let swatches: [Swatch]
 
-    public class func from(image: UIImage) -> Builder {
-        return Builder(image: image)
-    }
-
     public var lightVibrantSwatch: Swatch? {
-        return swatch(for: .lightVibrant)
+        swatch(for: .lightVibrant)
     }
 
     public var lightVibrantColor: UIColor? {
-        return lightVibrantSwatch?.color
+        lightVibrantSwatch?.color
     }
 
     public var vibrantSwatch: Swatch? {
-        return swatch(for: .vibrant)
+        swatch(for: .vibrant)
     }
 
     public var vibrantColor: UIColor? {
-        return vibrantSwatch?.color
+        vibrantSwatch?.color
     }
 
     public var darkVibrantSwatch: Swatch? {
-        return swatch(for: .darkVibrant)
+        swatch(for: .darkVibrant)
     }
 
     public var darkVibrantColor: UIColor? {
-        return darkVibrantSwatch?.color
+        darkVibrantSwatch?.color
     }
 
     public var lightMutedSwatch: Swatch? {
-        return swatch(for: .lightMuted)
+        swatch(for: .lightMuted)
     }
 
     public var lightMutedColor: UIColor? {
-        return lightMutedSwatch?.color
+        lightMutedSwatch?.color
     }
 
     public var mutedSwatch: Swatch? {
-        return swatch(for: .muted)
+        swatch(for: .muted)
     }
 
     public var mutedColor: UIColor? {
-        return mutedSwatch?.color
+        mutedSwatch?.color
     }
 
     public var darkMutedSwatch: Swatch? {
-        return swatch(for: .darkMuted)
+        swatch(for: .darkMuted)
     }
 
     public var darkMutedColor:UIColor? {
-        return darkMutedSwatch?.color
+        darkMutedSwatch?.color
     }
 
     public private(set) lazy var dominantSwatch: Swatch? = {
-        return swatches.max { $0.population < $1.population }
+        swatches.max { $0.population < $1.population }
     }()
 
     public var dominantColor: UIColor? {
-        return dominantSwatch?.color
+        dominantSwatch?.color
+    }
+
+    public class func from(image: UIImage) -> Builder {
+        Builder(image: image)
     }
 
     public func swatch(for target: Target) -> Swatch? {
-        return selectedSwatches[target]
+        selectedSwatches[target]
     }
 
     public func color(for target: Target) -> UIColor? {
-        return swatch(for: target)?.color
+        swatch(for: target)?.color
     }
 
     // MARK: - Internal
 
-    internal init(swatches: [Swatch], targets: [Target]) {
+    init(swatches: [Swatch], targets: [Target]) {
         self.swatches = swatches
         self.targets = targets
     }
 
-    internal func generate() {
+    func generate() {
         targets.forEach {
             $0.normalizeWeights()
             selectedSwatches[$0] = scoredSwatch(for: $0)

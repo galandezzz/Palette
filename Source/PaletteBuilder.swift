@@ -1,11 +1,3 @@
-//
-//  PaletteBuilder.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 05.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import UIKit
 
 extension Palette {
@@ -16,43 +8,36 @@ extension Palette {
 
         public func with(maximumColorsCount: Int) -> Builder {
             self.maxColorsCount = maximumColorsCount
-
             return self
         }
 
         public func with(resizeArea: CGFloat) -> Builder {
             self.resizeArea = resizeArea
-
             return self
         }
 
         public func byRemovingFilters() -> Builder {
             self.filters.removeAll()
-
             return self
         }
 
         public func byAddingFilter(_ filter: PaletteFilter) -> Builder {
             self.filters.append(filter)
-
             return self
         }
 
         public func byRemovingTargets() -> Builder {
             self.targets.removeAll()
-
             return self
         }
 
         public func byAddingTarget(_ target: Target) -> Builder {
             self.targets.append(target)
-
             return self
         }
 
         public func generate() -> Palette {
             let swatches: [Swatch]
-
             if let image = image {
                 let scaledImage = scaleDownImage(image, to: resizeArea)
                 let colors = calculateColors(from: scaledImage)
@@ -80,7 +65,7 @@ extension Palette {
 
         // MARK: - Internal
 
-        internal init(image: UIImage) {
+        init(image: UIImage) {
             self.image = image
 
             self.filters.append(DefaultFilter())
@@ -93,7 +78,7 @@ extension Palette {
             self.targets.append(.darkMuted)
         }
 
-        internal init(swatches: [Swatch]) {
+        init(swatches: [Swatch]) {
             self.image = nil
             self.filters.append(DefaultFilter())
             self.swatches = swatches
@@ -151,13 +136,15 @@ extension Palette {
 
             var data = Array(repeating: UInt8(0), count: bytesCount)
 
-            let context = CGContext(data: &data,
-                                    width: width,
-                                    height: height,
-                                    bitsPerComponent: 8,
-                                    bytesPerRow: bytesPerRow,
-                                    space: colorSpace,
-                                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+            let context = CGContext(
+                data: &data,
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bytesPerRow: bytesPerRow,
+                space: colorSpace,
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            )
 
             let size = CGSize(width: width, height: height)
             let rect = CGRect(origin: .zero, size: size)
@@ -165,15 +152,6 @@ extension Palette {
             context?.draw(cgImage, in: rect)
 
             return data.chunk(into: 4).map { Color(reducingAlpha: $0) }
-        }
-    }
-}
-
-private extension Collection where Index: Strideable {
-
-    func chunk(into size: Index.Stride) -> [[Element]] {
-        return stride(from: startIndex, to: endIndex, by: size).map {
-            Array(self[$0 ..< Swift.min($0.advanced(by: size), endIndex)])
         }
     }
 }

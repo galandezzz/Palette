@@ -1,11 +1,3 @@
-//
-//  UIImage+Palette.swift
-//  Palette
-//
-//  Created by Egor Snitsar on 09.08.2019.
-//  Copyright © 2019 Egor Snitsar. All rights reserved.
-//
-
 import Foundation
 
 extension UIImage {
