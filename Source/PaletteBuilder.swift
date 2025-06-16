@@ -1,4 +1,4 @@
-import UIKit
+import CoreGraphics
 
 extension Palette {
 
@@ -36,7 +36,7 @@ extension Palette {
             return self
         }
 
-        public func generate() -> Palette {
+        public func build() -> Palette {
             let swatches: [Swatch]
             if let image = image {
                 let scaledImage = scaleDownImage(image, to: resizeArea)
@@ -53,9 +53,9 @@ extension Palette {
             return p
         }
 
-        public func generate(_ completion: @escaping (Palette) -> Void) {
+        public func build(_ completion: @escaping (Palette) -> Void) {
             DispatchQueue.global(qos: .userInitiated).async {
-                let palette = self.generate()
+                let palette = self.build()
 
                 DispatchQueue.main.async {
                     completion(palette)
@@ -65,7 +65,7 @@ extension Palette {
 
         // MARK: - Internal
 
-        init(image: UIImage) {
+        init(image: CGImage) {
             self.image = image
 
             self.filters.append(DefaultFilter())
@@ -94,40 +94,39 @@ extension Palette {
         private var maxColorsCount = Constants.defaultMaxColorsCount
         private var resizeArea = Constants.defaultResizeBitmapArea
 
-        private let image: UIImage?
+        private let image: CGImage?
         private var swatches = [Swatch]()
         private var targets = [Target]()
         private var filters = [PaletteFilter]()
 
-        private func scaleDownImage(_ image: UIImage, to resizeArea: CGFloat) -> UIImage {
-            let bitmapArea = image.size.width * image.size.height
-
-            guard bitmapArea > resizeArea else {
-                return image
-            }
+        private func scaleDownImage(_ image: CGImage, to resizeArea: CGFloat) -> CGImage {
+            let bitmapArea = CGFloat(image.width * image.height)
+            guard bitmapArea > resizeArea else { return image }
 
             let ratio = sqrt(resizeArea / bitmapArea)
-            let width = ceil(ratio * image.size.width)
-            let height = ceil(ratio * image.size.height)
+            let width = ceil(ratio * CGFloat(image.width))
+            let height = ceil(ratio * CGFloat(image.height))
+
+            let context = CGContext(
+                data: nil,
+                width: Int(width),
+                height: Int(height),
+                bitsPerComponent: image.bitsPerComponent,
+                bytesPerRow: image.bytesPerRow,
+                space: image.colorSpace ?? CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: image.bitmapInfo.rawValue
+            )
+
             let size = CGSize(width: width, height: height)
+            let rect = CGRect(origin: .zero, size: size)
+            context?.draw(image, in: rect)
 
-            UIGraphicsBeginImageContext(size)
-
-            image.draw(in: CGRect(origin: .zero, size: size))
-            let resultImage = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-
-            return resultImage ?? image
+            return context?.makeImage() ?? image
         }
 
-        private func calculateColors(from image: UIImage) -> [Color] {
-            guard let cgImage = image.cgImage else {
-                return []
-            }
-
-            let width = cgImage.width
-            let height = cgImage.height
+        private func calculateColors(from image: CGImage) -> [ColorDescriptor] {
+            let width = image.width
+            let height = image.height
 
             let bytesPerRow = width * 4
             let bytesCount = bytesPerRow * height
@@ -149,9 +148,9 @@ extension Palette {
             let size = CGSize(width: width, height: height)
             let rect = CGRect(origin: .zero, size: size)
 
-            context?.draw(cgImage, in: rect)
+            context?.draw(image, in: rect)
 
-            return data.chunk(into: 4).map { Color(reducingAlpha: $0) }
+            return data.chunk(into: 4).map { ColorDescriptor(reducingAlpha: $0) }
         }
     }
 }

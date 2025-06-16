@@ -1,6 +1,6 @@
-extension UIColor {
+extension Color {
 
-    convenience init(_ color: Color) {
+    convenience init(_ color: ColorDescriptor) {
         self.init(
             red: CGFloat(color.red) / 255.0,
             green: CGFloat(color.green) / 255.0,

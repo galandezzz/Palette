@@ -2,7 +2,7 @@ import Foundation
 
 struct ColorConverter {
 
-    static func colorToHSL(_ color: Color) -> HSL {
+    static func colorToHSL(_ color: ColorDescriptor) -> HSL {
         let r = CGFloat(color.red) / 255.0
         let g = CGFloat(color.green) / 255.0
         let b = CGFloat(color.blue) / 255.0

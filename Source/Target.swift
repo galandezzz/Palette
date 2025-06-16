@@ -1,5 +1,3 @@
-import UIKit
-
 extension Target {
 
     public static let lightVibrant: Target = {

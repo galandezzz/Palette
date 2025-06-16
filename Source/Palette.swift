@@ -1,4 +1,4 @@
-import UIKit
+import CoreGraphics
 
 public final class Palette {
 
@@ -10,7 +10,7 @@ public final class Palette {
         swatch(for: .lightVibrant)
     }
 
-    public var lightVibrantColor: UIColor? {
+    public var lightVibrantColor: Color? {
         lightVibrantSwatch?.color
     }
 
@@ -18,7 +18,7 @@ public final class Palette {
         swatch(for: .vibrant)
     }
 
-    public var vibrantColor: UIColor? {
+    public var vibrantColor: Color? {
         vibrantSwatch?.color
     }
 
@@ -26,7 +26,7 @@ public final class Palette {
         swatch(for: .darkVibrant)
     }
 
-    public var darkVibrantColor: UIColor? {
+    public var darkVibrantColor: Color? {
         darkVibrantSwatch?.color
     }
 
@@ -34,7 +34,7 @@ public final class Palette {
         swatch(for: .lightMuted)
     }
 
-    public var lightMutedColor: UIColor? {
+    public var lightMutedColor: Color? {
         lightMutedSwatch?.color
     }
 
@@ -42,7 +42,7 @@ public final class Palette {
         swatch(for: .muted)
     }
 
-    public var mutedColor: UIColor? {
+    public var mutedColor: Color? {
         mutedSwatch?.color
     }
 
@@ -50,7 +50,7 @@ public final class Palette {
         swatch(for: .darkMuted)
     }
 
-    public var darkMutedColor:UIColor? {
+    public var darkMutedColor: Color? {
         darkMutedSwatch?.color
     }
 
@@ -58,19 +58,15 @@ public final class Palette {
         swatches.max { $0.population < $1.population }
     }()
 
-    public var dominantColor: UIColor? {
+    public var dominantColor: Color? {
         dominantSwatch?.color
-    }
-
-    public class func from(image: UIImage) -> Builder {
-        Builder(image: image)
     }
 
     public func swatch(for target: Target) -> Swatch? {
         selectedSwatches[target]
     }
 
-    public func color(for target: Target) -> UIColor? {
+    public func color(for target: Target) -> Color? {
         swatch(for: target)?.color
     }
 
@@ -95,7 +91,7 @@ public final class Palette {
     private let targets: [Target]
 
     private var selectedSwatches = [Target: Swatch]()
-    private var usedColors = Set<Color>()
+    private var usedColors = Set<ColorDescriptor>()
 
     private func scoredSwatch(for target: Target) -> Swatch? {
         guard let swatch = maxScoredSwatch(for: target) else {

@@ -1,12 +1,12 @@
 import Foundation
 
-extension UIImage {
+extension Image {
 
     public func createPalette() -> Palette {
-        return Palette.from(image: self).generate()
+        Palette.Builder(self).build()
     }
 
     public func createPalette(_ completion: @escaping (Palette) -> Void) {
-        return Palette.from(image: self).generate(completion)
+        Palette.Builder(self).build(completion)
     }
 }

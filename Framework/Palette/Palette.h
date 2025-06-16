@@ -1,4 +1,4 @@
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Palette.
 FOUNDATION_EXPORT double PaletteVersionNumber;

@@ -1,12 +1,10 @@
-import UIKit
-
 final class ColorCutQuantizer {
 
     private let filters: [PaletteFilter]
 
     private(set) var quantizedColors = [Palette.Swatch]()
 
-    init(colors: [Color], maxColorsCount: Int, filters: [PaletteFilter]) {
+    init(colors: [ColorDescriptor], maxColorsCount: Int, filters: [PaletteFilter]) {
         self.filters = filters
 
         let hist = CountedSet(
@@ -37,14 +35,14 @@ final class ColorCutQuantizer {
         shouldIgnoreColor(swatch._color)
     }
 
-    private func shouldIgnoreColor(_ color: Color) -> Bool {
+    private func shouldIgnoreColor(_ color: ColorDescriptor) -> Bool {
         filters.contains { !$0.isAllowed(rgb: color.rgb, hsl: color.hsl) }
     }
 
     private func quantizePixels(
         maxColorsCount: Int,
-        colors: inout [Color],
-        histogram: CountedSet<Color>
+        colors: inout [ColorDescriptor],
+        histogram: CountedSet<ColorDescriptor>
     ) -> [Palette.Swatch] {
         var queue = PriorityQueue<VBox>() { $0.volume > $1.volume }
         let vbox = VBox(
@@ -61,8 +59,8 @@ final class ColorCutQuantizer {
     private func splitBoxes(
         queue: inout PriorityQueue<VBox>,
         maxSize: Int,
-        colors: inout [Color],
-        histogram: CountedSet<Color>
+        colors: inout [ColorDescriptor],
+        histogram: CountedSet<ColorDescriptor>
     ) {
         while queue.count < maxSize {
             guard let vbox = queue.dequeue(), vbox.canSplit else {
@@ -77,8 +75,8 @@ final class ColorCutQuantizer {
 
     private func generateAverageColors(
         from boxes: [VBox],
-        colors: [Color],
-        histogram: CountedSet<Color>
+        colors: [ColorDescriptor],
+        histogram: CountedSet<ColorDescriptor>
     ) -> [Palette.Swatch] {
         boxes.compactMap {
             let swatch = $0.averageColor(colors: colors, histogram: histogram)
@@ -90,8 +88,8 @@ final class ColorCutQuantizer {
 
         init(
             range: ClosedRange<Int>,
-            colors: [Color],
-            histogram: CountedSet<Color>
+            colors: [ColorDescriptor],
+            histogram: CountedSet<ColorDescriptor>
         ) {
             self.range = range
             fitBox(colors: colors, histogram: histogram)
@@ -106,8 +104,8 @@ final class ColorCutQuantizer {
         }
 
         func splitBox(
-            colors: inout [Color],
-            histogram: CountedSet<Color>
+            colors: inout [ColorDescriptor],
+            histogram: CountedSet<ColorDescriptor>
         ) -> VBox? {
             guard canSplit else { return nil }
 
@@ -122,8 +120,8 @@ final class ColorCutQuantizer {
         }
 
         func averageColor(
-            colors: [Color],
-            histogram: CountedSet<Color>
+            colors: [ColorDescriptor],
+            histogram: CountedSet<ColorDescriptor>
         ) -> Palette.Swatch {
             var redSum = 0, greenSum = 0, blueSum = 0, totalCount = 0
 
@@ -143,7 +141,7 @@ final class ColorCutQuantizer {
             let greenMean = mean(greenSum)
             let blueMean = mean(blueSum)
 
-            let color = Color([redMean, greenMean, blueMean], width: .quantized)
+            let color = ColorDescriptor([redMean, greenMean, blueMean], width: .quantized)
 
             return Palette.Swatch(color: color.normalized, population: totalCount)
         }
@@ -169,8 +167,8 @@ final class ColorCutQuantizer {
         }
 
         private func fitBox(
-            colors: [Color],
-            histogram: CountedSet<Color>
+            colors: [ColorDescriptor],
+            histogram: CountedSet<ColorDescriptor>
         ) {
             minRed = Int.max
             minGreen = Int.max
@@ -214,8 +212,8 @@ final class ColorCutQuantizer {
         }
 
         private func findSplitPoint(
-            colors: inout [Color],
-            histogram: CountedSet<Color>
+            colors: inout [ColorDescriptor],
+            histogram: CountedSet<ColorDescriptor>
         ) -> Int {
             let longestComponent = findLongestComponent()
 
@@ -238,7 +236,7 @@ final class ColorCutQuantizer {
         }
 
         private func modifySignificantOctet(
-            for colors: inout [Color],
+            for colors: inout [ColorDescriptor],
             component: Component,
             range: ClosedRange<Int>
         ) {
@@ -249,13 +247,13 @@ final class ColorCutQuantizer {
             case .green:
                 for i in range {
                     let (r, g, b) = colors[i].rgb
-                    colors[i] = Color([g, r, b], width: colors[i].width)
+                    colors[i] = ColorDescriptor([g, r, b], width: colors[i].width)
                 }
 
             case .blue:
                 for i in range {
                     let (r, g, b) = colors[i].rgb
-                    colors[i] = Color([b, g, r], width: colors[i].width)
+                    colors[i] = ColorDescriptor([b, g, r], width: colors[i].width)
                 }
             }
         }
