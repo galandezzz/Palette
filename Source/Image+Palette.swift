@@ -9,4 +9,12 @@ extension Image {
     public func createPalette(_ completion: @escaping (Palette) -> Void) {
         Palette.Builder(self).build(completion)
     }
+
+    public func createPalette() async -> Palette {
+        await withCheckedContinuation { continuation in
+            createPalette { palette in
+                continuation.resume(returning: palette)
+            }
+        }
+    }
 }

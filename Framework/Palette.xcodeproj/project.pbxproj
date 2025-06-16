@@ -7,49 +7,49 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F53B15822FF63E500039D92 /* TargetBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F53B15722FF63E500039D92 /* TargetBuilder.swift */; };
-		0F53B15A22FF643700039D92 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F53B15922FF643700039D92 /* ColorConverter.swift */; };
 		0FE76AE922FCD15F00F23EE6 /* Palette.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE76AE722FCD15F00F23EE6 /* Palette.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0FE76AFB22FCD1CA00F23EE6 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF022FCD1CA00F23EE6 /* Palette.swift */; };
-		0FE76AFC22FCD1CA00F23EE6 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF222FCD1CA00F23EE6 /* PriorityQueue.swift */; };
-		0FE76AFD22FCD1CA00F23EE6 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF322FCD1CA00F23EE6 /* Heap.swift */; };
-		0FE76AFE22FCD1CA00F23EE6 /* CountedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF422FCD1CA00F23EE6 /* CountedSet.swift */; };
-		0FE76AFF22FCD1CA00F23EE6 /* PaletteSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF522FCD1CA00F23EE6 /* PaletteSwatch.swift */; };
-		0FE76B0022FCD1CA00F23EE6 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF622FCD1CA00F23EE6 /* Target.swift */; };
-		0FE76B0122FCD1CA00F23EE6 /* PaletteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF722FCD1CA00F23EE6 /* PaletteFilter.swift */; };
-		0FE76B0222FCD1CA00F23EE6 /* ColorCutQuantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */; };
-		0FE76B0322FCD1CA00F23EE6 /* ColorDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AF922FCD1CA00F23EE6 /* ColorDescriptor.swift */; };
-		0FE76B0422FCD1CA00F23EE6 /* PaletteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76AFA22FCD1CA00F23EE6 /* PaletteBuilder.swift */; };
-		0FE76B0622FCD2C100F23EE6 /* Image+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */; };
-		1A408E992E00C7E600115408 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408E982E00C7E400115408 /* UIColor+Utils.swift */; };
-		1A408E9B2E00C97D00115408 /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408E9A2E00C97B00115408 /* Collection+Utils.swift */; };
-		1A408E9D2E00CE2A00115408 /* Comparable+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408E9C2E00CE2600115408 /* Comparable+Utils.swift */; };
-		1A408EAD2E00E0E600115408 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EAC2E00E0E600115408 /* Color.swift */; };
-		1A408EAF2E00E0FA00115408 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EAE2E00E0F800115408 /* Image.swift */; };
+		1A408EEA2E00E3E400115408 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDC2E00E3E400115408 /* ColorConverter.swift */; };
+		1A408EEB2E00E3E400115408 /* Image+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE12E00E3E400115408 /* Image+Palette.swift */; };
+		1A408EEC2E00E3E400115408 /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDA2E00E3E400115408 /* Collection+Utils.swift */; };
+		1A408EED2E00E3E400115408 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE02E00E3E400115408 /* Image.swift */; };
+		1A408EEE2E00E3E400115408 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408ED72E00E3E400115408 /* Heap.swift */; };
+		1A408EEF2E00E3E400115408 /* Comparable+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDF2E00E3E400115408 /* Comparable+Utils.swift */; };
+		1A408EF02E00E3E400115408 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE82E00E3E400115408 /* UIColor+Utils.swift */; };
+		1A408EF12E00E3E400115408 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDB2E00E3E400115408 /* Color.swift */; };
+		1A408EF22E00E3E400115408 /* PaletteSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE52E00E3E400115408 /* PaletteSwatch.swift */; };
+		1A408EF32E00E3E400115408 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408ED82E00E3E400115408 /* PriorityQueue.swift */; };
+		1A408EF42E00E3E400115408 /* CountedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408ED62E00E3E400115408 /* CountedSet.swift */; };
+		1A408EF52E00E3E400115408 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE22E00E3E400115408 /* Palette.swift */; };
+		1A408EF62E00E3E400115408 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE62E00E3E400115408 /* Target.swift */; };
+		1A408EF72E00E3E400115408 /* PaletteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE42E00E3E400115408 /* PaletteFilter.swift */; };
+		1A408EF82E00E3E400115408 /* TargetBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE72E00E3E400115408 /* TargetBuilder.swift */; };
+		1A408EF92E00E3E400115408 /* ColorCutQuantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDD2E00E3E400115408 /* ColorCutQuantizer.swift */; };
+		1A408EFA2E00E3E400115408 /* PaletteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EE32E00E3E400115408 /* PaletteBuilder.swift */; };
+		1A408EFB2E00E3E400115408 /* ColorDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A408EDE2E00E3E400115408 /* ColorDescriptor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F53B15722FF63E500039D92 /* TargetBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBuilder.swift; sourceTree = "<group>"; };
-		0F53B15922FF643700039D92 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		0FE76AE422FCD15F00F23EE6 /* Palette.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palette.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE76AE722FCD15F00F23EE6 /* Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		0FE76AE822FCD15F00F23EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0FE76AF022FCD1CA00F23EE6 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
-		0FE76AF222FCD1CA00F23EE6 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
-		0FE76AF322FCD1CA00F23EE6 /* Heap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
-		0FE76AF422FCD1CA00F23EE6 /* CountedSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountedSet.swift; sourceTree = "<group>"; };
-		0FE76AF522FCD1CA00F23EE6 /* PaletteSwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteSwatch.swift; sourceTree = "<group>"; };
-		0FE76AF622FCD1CA00F23EE6 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
-		0FE76AF722FCD1CA00F23EE6 /* PaletteFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteFilter.swift; sourceTree = "<group>"; };
-		0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCutQuantizer.swift; sourceTree = "<group>"; };
-		0FE76AF922FCD1CA00F23EE6 /* ColorDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDescriptor.swift; sourceTree = "<group>"; };
-		0FE76AFA22FCD1CA00F23EE6 /* PaletteBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteBuilder.swift; sourceTree = "<group>"; };
-		0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Palette.swift"; sourceTree = "<group>"; };
-		1A408E982E00C7E400115408 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
-		1A408E9A2E00C97B00115408 /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
-		1A408E9C2E00CE2600115408 /* Comparable+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Utils.swift"; sourceTree = "<group>"; };
-		1A408EAC2E00E0E600115408 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		1A408EAE2E00E0F800115408 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		1A408ED62E00E3E400115408 /* CountedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountedSet.swift; sourceTree = "<group>"; };
+		1A408ED72E00E3E400115408 /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		1A408ED82E00E3E400115408 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		1A408EDA2E00E3E400115408 /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
+		1A408EDB2E00E3E400115408 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		1A408EDC2E00E3E400115408 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
+		1A408EDD2E00E3E400115408 /* ColorCutQuantizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCutQuantizer.swift; sourceTree = "<group>"; };
+		1A408EDE2E00E3E400115408 /* ColorDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorDescriptor.swift; sourceTree = "<group>"; };
+		1A408EDF2E00E3E400115408 /* Comparable+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Utils.swift"; sourceTree = "<group>"; };
+		1A408EE02E00E3E400115408 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		1A408EE12E00E3E400115408 /* Image+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Palette.swift"; sourceTree = "<group>"; };
+		1A408EE22E00E3E400115408 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		1A408EE32E00E3E400115408 /* PaletteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteBuilder.swift; sourceTree = "<group>"; };
+		1A408EE42E00E3E400115408 /* PaletteFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteFilter.swift; sourceTree = "<group>"; };
+		1A408EE52E00E3E400115408 /* PaletteSwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSwatch.swift; sourceTree = "<group>"; };
+		1A408EE62E00E3E400115408 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		1A408EE72E00E3E400115408 /* TargetBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBuilder.swift; sourceTree = "<group>"; };
+		1A408EE82E00E3E400115408 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,46 +82,46 @@
 		0FE76AE622FCD15F00F23EE6 /* Palette */ = {
 			isa = PBXGroup;
 			children = (
+				1A408EE92E00E3E400115408 /* Source */,
 				0FE76AE722FCD15F00F23EE6 /* Palette.h */,
 				0FE76AE822FCD15F00F23EE6 /* Info.plist */,
-				0FE76AEF22FCD1CA00F23EE6 /* Source */,
 			);
 			path = Palette;
 			sourceTree = "<group>";
 		};
-		0FE76AEF22FCD1CA00F23EE6 /* Source */ = {
+		1A408ED92E00E3E400115408 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
-				1A408EAE2E00E0F800115408 /* Image.swift */,
-				1A408EAC2E00E0E600115408 /* Color.swift */,
-				1A408E9C2E00CE2600115408 /* Comparable+Utils.swift */,
-				1A408E9A2E00C97B00115408 /* Collection+Utils.swift */,
-				1A408E982E00C7E400115408 /* UIColor+Utils.swift */,
-				0FE76AF022FCD1CA00F23EE6 /* Palette.swift */,
-				0FE76AFA22FCD1CA00F23EE6 /* PaletteBuilder.swift */,
-				0FE76AF522FCD1CA00F23EE6 /* PaletteSwatch.swift */,
-				0FE76AF722FCD1CA00F23EE6 /* PaletteFilter.swift */,
-				0FE76AF622FCD1CA00F23EE6 /* Target.swift */,
-				0F53B15722FF63E500039D92 /* TargetBuilder.swift */,
-				0FE76AF822FCD1CA00F23EE6 /* ColorCutQuantizer.swift */,
-				0FE76AF922FCD1CA00F23EE6 /* ColorDescriptor.swift */,
-				0F53B15922FF643700039D92 /* ColorConverter.swift */,
-				0FE76B0522FCD2C100F23EE6 /* Image+Palette.swift */,
-				0FE76AF122FCD1CA00F23EE6 /* Data Structures */,
-			);
-			name = Source;
-			path = ../../Source;
-			sourceTree = "<group>";
-		};
-		0FE76AF122FCD1CA00F23EE6 /* Data Structures */ = {
-			isa = PBXGroup;
-			children = (
-				0FE76AF222FCD1CA00F23EE6 /* PriorityQueue.swift */,
-				0FE76AF322FCD1CA00F23EE6 /* Heap.swift */,
-				0FE76AF422FCD1CA00F23EE6 /* CountedSet.swift */,
+				1A408ED62E00E3E400115408 /* CountedSet.swift */,
+				1A408ED72E00E3E400115408 /* Heap.swift */,
+				1A408ED82E00E3E400115408 /* PriorityQueue.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
+		};
+		1A408EE92E00E3E400115408 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1A408ED92E00E3E400115408 /* Data Structures */,
+				1A408EDA2E00E3E400115408 /* Collection+Utils.swift */,
+				1A408EDB2E00E3E400115408 /* Color.swift */,
+				1A408EDC2E00E3E400115408 /* ColorConverter.swift */,
+				1A408EDD2E00E3E400115408 /* ColorCutQuantizer.swift */,
+				1A408EDE2E00E3E400115408 /* ColorDescriptor.swift */,
+				1A408EDF2E00E3E400115408 /* Comparable+Utils.swift */,
+				1A408EE02E00E3E400115408 /* Image.swift */,
+				1A408EE12E00E3E400115408 /* Image+Palette.swift */,
+				1A408EE22E00E3E400115408 /* Palette.swift */,
+				1A408EE32E00E3E400115408 /* PaletteBuilder.swift */,
+				1A408EE42E00E3E400115408 /* PaletteFilter.swift */,
+				1A408EE52E00E3E400115408 /* PaletteSwatch.swift */,
+				1A408EE62E00E3E400115408 /* Target.swift */,
+				1A408EE72E00E3E400115408 /* TargetBuilder.swift */,
+				1A408EE82E00E3E400115408 /* UIColor+Utils.swift */,
+			);
+			name = Source;
+			path = ../Source;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -203,24 +203,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A408E9B2E00C97D00115408 /* Collection+Utils.swift in Sources */,
-				1A408EAF2E00E0FA00115408 /* Image.swift in Sources */,
-				0F53B15A22FF643700039D92 /* ColorConverter.swift in Sources */,
-				0FE76B0222FCD1CA00F23EE6 /* ColorCutQuantizer.swift in Sources */,
-				1A408E9D2E00CE2A00115408 /* Comparable+Utils.swift in Sources */,
-				1A408EAD2E00E0E600115408 /* Color.swift in Sources */,
-				0FE76B0022FCD1CA00F23EE6 /* Target.swift in Sources */,
-				0FE76AFD22FCD1CA00F23EE6 /* Heap.swift in Sources */,
-				0FE76AFE22FCD1CA00F23EE6 /* CountedSet.swift in Sources */,
-				0F53B15822FF63E500039D92 /* TargetBuilder.swift in Sources */,
-				0FE76B0122FCD1CA00F23EE6 /* PaletteFilter.swift in Sources */,
-				0FE76AFB22FCD1CA00F23EE6 /* Palette.swift in Sources */,
-				0FE76AFF22FCD1CA00F23EE6 /* PaletteSwatch.swift in Sources */,
-				0FE76AFC22FCD1CA00F23EE6 /* PriorityQueue.swift in Sources */,
-				0FE76B0322FCD1CA00F23EE6 /* ColorDescriptor.swift in Sources */,
-				0FE76B0622FCD2C100F23EE6 /* Image+Palette.swift in Sources */,
-				0FE76B0422FCD1CA00F23EE6 /* PaletteBuilder.swift in Sources */,
-				1A408E992E00C7E600115408 /* UIColor+Utils.swift in Sources */,
+				1A408EEA2E00E3E400115408 /* ColorConverter.swift in Sources */,
+				1A408EEB2E00E3E400115408 /* Image+Palette.swift in Sources */,
+				1A408EEC2E00E3E400115408 /* Collection+Utils.swift in Sources */,
+				1A408EED2E00E3E400115408 /* Image.swift in Sources */,
+				1A408EEE2E00E3E400115408 /* Heap.swift in Sources */,
+				1A408EEF2E00E3E400115408 /* Comparable+Utils.swift in Sources */,
+				1A408EF02E00E3E400115408 /* UIColor+Utils.swift in Sources */,
+				1A408EF12E00E3E400115408 /* Color.swift in Sources */,
+				1A408EF22E00E3E400115408 /* PaletteSwatch.swift in Sources */,
+				1A408EF32E00E3E400115408 /* PriorityQueue.swift in Sources */,
+				1A408EF42E00E3E400115408 /* CountedSet.swift in Sources */,
+				1A408EF52E00E3E400115408 /* Palette.swift in Sources */,
+				1A408EF62E00E3E400115408 /* Target.swift in Sources */,
+				1A408EF72E00E3E400115408 /* PaletteFilter.swift in Sources */,
+				1A408EF82E00E3E400115408 /* TargetBuilder.swift in Sources */,
+				1A408EF92E00E3E400115408 /* ColorCutQuantizer.swift in Sources */,
+				1A408EFA2E00E3E400115408 /* PaletteBuilder.swift in Sources */,
+				1A408EFB2E00E3E400115408 /* ColorDescriptor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
