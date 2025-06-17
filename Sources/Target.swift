@@ -1,3 +1,5 @@
+import CoreGraphics
+
 extension Target {
 
     public static let lightVibrant: Target = {

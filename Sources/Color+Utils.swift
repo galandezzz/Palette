@@ -1,3 +1,5 @@
+import CoreGraphics
+
 extension Color {
 
     convenience init(_ color: ColorDescriptor) {

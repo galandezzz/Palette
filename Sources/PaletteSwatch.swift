@@ -1,3 +1,5 @@
+import CoreGraphics
+
 public typealias RGB = (r: Int, g: Int, b: Int)
 public typealias HSL = (h: CGFloat, s: CGFloat, l: CGFloat)
 

@@ -63,6 +63,15 @@ extension Palette {
             }
         }
 
+        @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+        public func build() async -> Palette {
+            await withCheckedContinuation { continuation in
+                build { palette in
+                    continuation.resume(returning: palette)
+                }
+            }
+        }
+
         // MARK: - Internal
 
         init(image: CGImage) {

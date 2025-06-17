@@ -1,3 +1,5 @@
+import CoreGraphics
+
 public protocol PaletteFilter {
     func isAllowed(rgb: RGB, hsl: HSL) -> Bool
 }

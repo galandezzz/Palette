@@ -1,3 +1,5 @@
+import CoreGraphics
+
 final class ColorCutQuantizer {
 
     private let filters: [PaletteFilter]
