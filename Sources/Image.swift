@@ -2,7 +2,7 @@
 import AppKit
 public typealias Image = NSImage
 
-extension Palette.Builder {
+extension Palette {
 
     class func from(image: NSImage) -> Palette.Builder {
         guard let image = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
