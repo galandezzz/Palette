@@ -1,11 +1,14 @@
 import Foundation
 
+typealias XYZ = (x: CGFloat, y: CGFloat, z: CGFloat)
+
 struct ColorConverter {
 
-    static func colorToHSL(_ color: ColorDescriptor) -> HSL {
-        let r = CGFloat(color.red) / 255.0
-        let g = CGFloat(color.green) / 255.0
-        let b = CGFloat(color.blue) / 255.0
+    static func colorToHSL(_ color: Color) -> HSL {
+        let components = color.components
+        let r = components.red
+        let g = components.green
+        let b = components.blue
 
         let cmin = min(r, g, b)
         let cmax = max(r, g, b)
@@ -37,6 +40,22 @@ struct ColorConverter {
             h.rounded().limited(.zero, 360.0),
             s.limited(.zero, 1.0),
             l.limited(.zero, 1.0)
+        )
+    }
+
+    static func colorToXYZ(_ color: Color) -> XYZ {
+        let components = color.components
+        let getComponent = { (component: CGFloat) -> CGFloat in
+            component < 0.04045 ? component / 12.92 : pow((component + 0.055) / 1.055, 2.4)
+        }
+        let r = getComponent(components.red)
+        let g = getComponent(components.green)
+        let b = getComponent(components.blue)
+
+        return (
+            100.0 * (r * 0.4124 + g * 0.3576 + b * 0.1805),
+            100.0 * (r * 0.2126 + g * 0.7152 + b * 0.0722),
+            100.0 * (r * 0.0193 + g * 0.1192 + b * 0.9505)
         )
     }
 

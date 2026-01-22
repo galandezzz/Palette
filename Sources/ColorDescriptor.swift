@@ -44,7 +44,7 @@ struct ColorDescriptor: Hashable, Comparable, CustomDebugStringConvertible {
     }
 
     var hsl: HSL {
-        ColorConverter.colorToHSL(self)
+        ColorConverter.colorToHSL(Color(self))
     }
 
     var rgb: RGB {
