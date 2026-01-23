@@ -4,7 +4,7 @@ public typealias Image = NSImage
 
 extension Palette {
 
-    class func from(image: NSImage) -> Palette.Builder {
+    public class func from(image: NSImage) -> Palette.Builder {
         guard let image = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return Palette.Builder(swatches: [])
         }
@@ -17,7 +17,7 @@ public typealias Image = UIImage
 
 extension Palette {
 
-    class func from(image: UIImage) -> Palette.Builder {
+    public class func from(image: UIImage) -> Palette.Builder {
         guard let image = image.cgImage else {
             return Palette.Builder(swatches: [])
         }
